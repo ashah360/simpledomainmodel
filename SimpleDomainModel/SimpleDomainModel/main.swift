@@ -49,6 +49,8 @@ public struct Money {
         return Money(amount: usdValue/2, currency: "GBP")
     case "CAN":
         return Money(amount: (usdValue * 5)/4, currency: "CAN")
+    default:
+        return Money(amount: amount, currency: currency)
     }
   }
   
@@ -77,12 +79,26 @@ open class Job {
   }
   
   public init(title : String, type : JobType) {
+    self.title = title
+    self.type = type
   }
   
   open func calculateIncome(_ hours: Int) -> Int {
+    switch self.type {
+    case JobType.Hourly(let value):
+        return Int(value * Double(hours))
+    case JobType.Salary(let value):
+        return value
+    }
   }
   
   open func raise(_ amt : Double) {
+    switch self.type {
+    case JobType.Hourly(let value):
+        self.type = JobType.Hourly(value + amt)
+    }
+    case JobType.Salary(let value):
+        self.type = JobType.Salary(value + Int(amt))
   }
 }
 
