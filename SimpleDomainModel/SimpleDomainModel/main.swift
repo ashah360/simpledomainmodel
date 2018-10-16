@@ -151,12 +151,38 @@ open class Family {
   fileprivate var members : [Person] = []
   
   public init(spouse1: Person, spouse2: Person) {
+    if spouse1.spouse == nil && spouse2.spouse == nil {
+        // set spouses
+        spouse1.spouse = spouse2
+        members.append(spouse1)
+        spouse2.spouse = spouse1
+        members.append(spouse2)
+    }
   }
   
   open func haveChild(_ child: Person) -> Bool {
+    // if the first spouse and the second pouse are both 21 or older
+    if members[0].age >= 21 || members[1].age >= 21 {
+        members.append(child)
+        return true
+    }
+    return false
   }
   
   open func householdIncome() -> Int {
+    var total: Int = 0
+    for member in members {
+        // if they have a job
+        if member.job != nil {
+            switch member.job!.type {
+            case Job.JobType.Salary(let value):
+                total += value
+            case Job.JobType.Hourly(let value):
+                total += Int(value * 2000)
+            }
+        }
+    }
+    return total
   }
 }
 
