@@ -28,11 +28,39 @@ public struct Money {
   public var currency : String
   
   public func convert(_ to: String) -> Money {
+    var usdValue = 0;
+    switch currency {
+    case "EUR":
+        usdValue = amount * 2 / 3
+    case "GBP":
+        usdValue = amount * 2
+    }
+    case "CAN":
+        usdValue = amount * 4 / 5
+    default:
+        usdValue = amount
+    
+    switch to {
+    case "USD":
+        return Money(amount: usdValue, currency: "USD")
+    case "EUR":
+        return Money(amount: (usdValue * 3)/2, currency: "EUR")
+    case "GBP":
+        return Money(amount: usdValue/2, currency: "GBP")
+    case "CAN":
+        return Money(amount: (usdValue * 5)/4, currency: "CAN")
+    }
   }
   
   public func add(_ to: Money) -> Money {
+    let convertedCurr = self.convert(to.currency);
+    let newAmt = convertedCurr.amount + to.amount
+    return Money(amount: newAmt, currency: to.currency)
   }
   public func subtract(_ from: Money) -> Money {
+    let convertedCurr = self.convert(from.currency)
+    let newAmt = from.amount - convertedCurr.amount
+    return Money(amount: newAmt, currency: from.currency)
   }
 }
 
