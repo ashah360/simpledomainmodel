@@ -34,11 +34,11 @@ public struct Money {
         usdValue = amount * 2 / 3
     case "GBP":
         usdValue = amount * 2
-    }
     case "CAN":
         usdValue = amount * 4 / 5
     default:
         usdValue = amount
+    }
     
     switch to {
     case "USD":
@@ -96,9 +96,9 @@ open class Job {
     switch self.type {
     case JobType.Hourly(let value):
         self.type = JobType.Hourly(value + amt)
-    }
     case JobType.Salary(let value):
         self.type = JobType.Salary(value + Int(amt))
+    }
   }
 }
 
@@ -114,7 +114,7 @@ open class Person {
   open var job : Job? {
     get {return self._job}
     set(value) {
-        if self.age >=16 {
+        if self.age >= 16 {
             self._job = value
         }
         else {
@@ -127,7 +127,7 @@ open class Person {
   open var spouse : Person? {
     get {return self._spouse}
     set(value) {
-        if self.age >=18 {
+        if self.age >= 18 {
             self._spouse = value
         }
     }
